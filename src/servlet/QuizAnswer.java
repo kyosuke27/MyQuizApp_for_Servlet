@@ -44,6 +44,7 @@ public class QuizAnswer extends HttpServlet {
 		//可変長配列にDBより取得情報を
 		ArrayList<Question> questions= dao.getQuestion();
 		session=request.getSession();
+		//セッションに値が入っていた場合初期化する
 		if (session.getAttribute("questions")!=null) {
 			session.removeAttribute("questions");
 		}	
