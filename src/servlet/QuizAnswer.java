@@ -9,6 +9,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.mysql.cj.Session;
 
 import Bean.Question;
 import Bean.QuestionDao;
@@ -19,7 +22,8 @@ import Bean.QuestionDao;
 @WebServlet("/QuizAnswer")
 public class QuizAnswer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    HttpSession session;   
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -39,7 +43,14 @@ public class QuizAnswer extends HttpServlet {
 		
 		//可変長配列にDBより取得情報を
 		ArrayList<Question> questions= dao.getQuestion();
+		session=request.getSession();
+		//セッションに値が入っていた場合初期化する
+		if (session.getAttribute("questions")!=null) {
+			session.removeAttribute("questions");
+		}	
 		request.setAttribute("questions", questions);
+		//問題数をセッションとして管理する
+		session.setAttribute("question",questions);
 		dispatcher.forward(request, response);
 		
 	}
@@ -49,28 +60,19 @@ public class QuizAnswer extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher dispatcher =getServletContext().getRequestDispatcher("/WEB-INF/answer.jsp");
+		session=request.getSession();
 		
-		String[] anStrings= {
-				"東京",
-				"獅白ぼたん",
-				"ときのそら"
-		};
+		ArrayList<Question> questions=(ArrayList<Question>)session.getAttribute("question");
+		
 		//フォームより値を受け取る
 		request.setCharacterEncoding("UTF-8");
 		
-		String[] answerStrings= {
-				request.getParameter("question0"),
-				request.getParameter("question1"),
-				request.getParameter("question2")
-		};
-		
 		//受け取った値を比較して結果を求める。
 		int answer=0;
-		for(int i=0;i<anStrings.length;i++) {
-			if (answerStrings[i]!=null) {
-				if(answerStrings[i].equals(anStrings[i])) {
-					answer++;
-				}
+		for(int i=0;i<questions.size();i++) {
+			String answerString=request.getParameter(""+questions.get(i).getQuestionId());
+			if (questions.get(i).getAnswerString().equals(answerString)){
+				answer++;
 			}
 		}
 		
