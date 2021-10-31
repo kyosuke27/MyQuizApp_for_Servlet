@@ -19,35 +19,41 @@ import Bean.QuestionDao;
 public class AddPageController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	Question addQuestion;
-	QuestionDao questinDao;  
+	QuestionDao questinDao;
 	RequestDispatcher dispatcher;
-	
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AddPageController() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher=getServletContext().getRequestDispatcher("/WEB-INF/add_question.jsp");
+	public AddPageController() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/add_question.jsp");
 		dispatcher.forward(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		questinDao=new QuestionDao();
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		questinDao = new QuestionDao();
 		request.setCharacterEncoding("UTF-8");
-		questinDao.setQuestion(request.getParameter("question"),request.getParameter("answer"));
+		if (request.getParameter("return_top") == null) {
+			//登録処理を行う
+			questinDao.setQuestion(request.getParameter("question"), request.getParameter("answer"));
+		}
+		//「登録」・「戻る」ボタンを押下した後の処理は共通してメインページへ戻る
 		response.sendRedirect("/myQuiz/QuizAnswer");
-		
-		
 	}
 
 }

@@ -16,12 +16,11 @@
 		<% for(int i=0;i<questions.size();i++){%>
 			<p><%= questions.get(i).getQuestionString() %></p>
 			<input type="text" name="<%=  questions.get(i).getQuestionId()%>">
+			<button type="submit" value="<%= questions.get(i).getQuestionId() %>" name="delete">削除</button>
 		<%} %>
 		<br>
 		<button type="submit">送信</button>
-	</form>
-	<form action="AddPageController">
-		<button type="submit">登録画面へ</button>
+		<button type="submit" name="store">登録画面へ</button>
 	</form>
 </body>
 </html>

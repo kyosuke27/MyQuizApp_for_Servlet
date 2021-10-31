@@ -13,6 +13,7 @@
 		<label>解答</label>
 		<input name="answer">
 		<button type="submit">登録</button>
+		<button type="submit" name="return_top">戻る</button>
 	</form>
 </body>
 </html>
