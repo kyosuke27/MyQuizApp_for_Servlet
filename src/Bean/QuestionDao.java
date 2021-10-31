@@ -73,8 +73,39 @@ public class QuestionDao {
 			} catch (Exception e) {
 			}
 		}
+	}
+	
+	public boolean deleteQuestion(int questionId) {
+		boolean deletFlg=false;
 		
+		String deleteSqlString="DELETE FROM QUESTION WHERE questionid=?";
+		
+		
+		try {
+			// JDBC Driver の登録
+			Class.forName("com.mysql.jdbc.Driver");
 
+			// Connectionの作成
+			conn = DriverManager.getConnection(urlString, dbUserName, dbPawString);
+			// パラメータ付きSQL文をDBに送るためのオブジェクト生成
+			pstmt = conn.prepareStatement(deleteSqlString);
+			pstmt.setInt(1, questionId);
+			// SQL文の実行(データ取得)
+			pstmt.executeUpdate();
+			deletFlg=true;
+			
+		}catch (Exception e) {
+			return deletFlg;
+		} finally {
+			System.out.println("done");
+			try {
+				// 念のため、finallyでDBとの接続を切断しておく
+				conn.close();
+			} catch (Exception e) {
+			}
+		}
+		return deletFlg;
+		
 	}
 
 }
