@@ -15,7 +15,7 @@
 	<form action="QuizAnswer" method="post">
 		<% for(int i=0;i<questions.size();i++){%>
 			<p><%= questions.get(i).getQuestionString() %></p>
-			<input type="text" name="question<%= i %>">
+			<input type="text" name="<%=  questions.get(i).getQuestionId()%>">
 		<%} %>
 		<br>
 		<button type="submit">送信</button>
