@@ -22,7 +22,8 @@ import Bean.QuestionDao;
 @WebServlet("/QuizAnswer")
 public class QuizAnswer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    HttpSession session;   
+    HttpSession session;
+    RequestDispatcher dispatcher;
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -37,7 +38,7 @@ public class QuizAnswer extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		RequestDispatcher dispatcher=getServletContext().getRequestDispatcher("/WEB-INF/question.jsp");
+		dispatcher=getServletContext().getRequestDispatcher("/WEB-INF/question.jsp");
 		//ここをDBから値を取って来る
 		QuestionDao dao=new QuestionDao();
 		
@@ -59,7 +60,7 @@ public class QuizAnswer extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher =getServletContext().getRequestDispatcher("/WEB-INF/answer.jsp");
+		dispatcher =getServletContext().getRequestDispatcher("/WEB-INF/answer.jsp");
 		session=request.getSession();
 		
 		ArrayList<Question> questions=(ArrayList<Question>)session.getAttribute("question");
