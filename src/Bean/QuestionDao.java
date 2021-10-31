@@ -30,8 +30,6 @@ public class QuestionDao {
 			// SQL文の実行(データ取得)
 			rset = pstmt.executeQuery();
 			while (rset.next()) {
-				//System.out.println(rset.getString("question"));
-				//System.out.println(rset.getString("answer"));
 				question=new Question(Integer.parseInt(rset.getString("questionId")),rset.getString("question"),rset.getString("answer"));
 				questions.add(question);
 			}

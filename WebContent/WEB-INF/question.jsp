@@ -20,5 +20,8 @@
 		<br>
 		<button type="submit">送信</button>
 	</form>
+	<form action="AddPageController">
+		<button type="submit">登録画面へ</button>
+	</form>
 </body>
 </html>

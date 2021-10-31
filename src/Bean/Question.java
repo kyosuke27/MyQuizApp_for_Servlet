@@ -5,12 +5,16 @@ public class Question {
 	private int questionId;
 	private String questionString;
 	private String answerString;
+	
+	public Question(String questioString,String answerString) {
+		this.questionString=questioString;
+		this.answerString=answerString;
+	}
 
 	public Question(int questionId,String questionString,String answerString) {
 		// TODO 自動生成されたコンストラクター・スタブ
+		this(questionString, answerString);
 		this.questionId=questionId;
-		this.questionString=questionString;
-		this.answerString=answerString;
 	}
 
 	public int getQuestionId() {
